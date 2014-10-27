@@ -31,8 +31,8 @@ module.exports = function(RED) {
                         delete node.state[msg.topic];
                     } else {
                         node.state[msg.topic] = msg.payload;
-                        node.send(node.state);
                     }
+                    node.send(node.state);
                 } else {
                     node.warn("No topic set on message to collector");
                 }
