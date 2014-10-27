@@ -26,9 +26,15 @@ module.exports = function(RED) {
         var node = this;
         node.on("input", function(msg) {
             try {
-                if (msg.topic && msg.payload) {
-                    node.state[msg.topic] = msg.payload;
-                    node.send(node.state);
+                if (msg.topic) {
+                    if (msg.payload == undefined || msg.payload == null || msg.payload == '') {
+                        delete node.state[msg.topic];
+                    } else {
+                        node.state[msg.topic] = msg.payload;
+                        node.send(node.state);
+                    }
+                } else {
+                    node.warn("No topic set on message to collector");
                 }
             } catch(err) {
                 node.error(err.message);
