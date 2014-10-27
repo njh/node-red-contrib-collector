@@ -18,7 +18,7 @@
 module.exports = function(RED) {
     "use strict";
 
-    function StatefulNode(n) {
+    function CollectorNode(n) {
         RED.nodes.createNode(this,n);
         this.name = n.name;
         this.state = {};
@@ -36,5 +36,5 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("stateful",StatefulNode);
+    RED.nodes.registerType("collector",CollectorNode);
 }

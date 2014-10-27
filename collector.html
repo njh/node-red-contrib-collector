@@ -15,19 +15,19 @@
   limitations under the License.
 -->
 
-<script type="text/x-red" data-template-name="stateful">
+<script type="text/x-red" data-template-name="collector">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="stateful">
+<script type="text/x-red" data-help-name="collector">
     <p>Stores multiple message payloads based on topic names.</p>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('stateful',{
+    RED.nodes.registerType('collector',{
         category: 'function',
         defaults: {
             name: {value:""}
@@ -37,7 +37,7 @@
         outputs:1,
         icon: "arrow-in.png",
         label: function() {
-            return this.name||"stateful";
+            return this.name||"collector";
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
