@@ -21,18 +21,18 @@ module.exports = function(RED) {
     function CollectorNode(n) {
         RED.nodes.createNode(this,n);
         this.name = n.name;
-        this.state = {};
+        this.values = {};
 
         var node = this;
         node.on("input", function(msg) {
             try {
                 if (msg.topic) {
                     if (msg.payload == undefined || msg.payload == null || msg.payload == '') {
-                        delete node.state[msg.topic];
+                        delete node.values[msg.topic];
                     } else {
-                        node.state[msg.topic] = msg.payload;
+                        node.values[msg.topic] = msg.payload;
                     }
-                    node.send(node.state);
+                    node.send(node.values);
                 } else {
                     node.warn("No topic set on message to collector");
                 }
