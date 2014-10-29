@@ -23,7 +23,9 @@
 </script>
 
 <script type="text/x-red" data-help-name="collector">
-    <p>Stores multiple message payloads based on topic names.</p>
+    <p>Collects message payloads and stores them against topic names. Upon recieving a message it will output all previously received <b>msg.topic</b>/<b>msg.payload</b> pairs as an object.</p>
+
+    <p>If if a message is received with a <b>msg.topic</b> but no <b>msg.payload</b>, then that topic will be deleted from the collector.</p>
 </script>
 
 <script type="text/javascript">
