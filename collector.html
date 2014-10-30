@@ -20,10 +20,17 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row" id="node-onlyIfChanged">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-onlyIfChanged" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-onlyIfChanged" style="width: 70%;">Only return message if value changed ?</label>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="collector">
     <p>Collects message payloads and stores them against topic names. Upon recieving a message it will output all previously received <b>msg.topic</b>/<b>msg.payload</b> pairs as an object.</p>
+
+    <p>If "<b>Only return message if value changed?</b>" is set, then a message will only be output, if the payload has changed since the last message with the same topic was received.</p>
 
     <p>If if a message is received with a <b>msg.topic</b> but no <b>msg.payload</b>, then that topic will be deleted from the collector.</p>
 </script>
@@ -32,7 +39,8 @@
     RED.nodes.registerType('collector',{
         category: 'function',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            onlyIfChanged: {value:true}
         },
         color:"rgb(243, 181, 103)",
         inputs:1,
