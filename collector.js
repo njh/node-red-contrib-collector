@@ -15,6 +15,9 @@
  * limitations under the License.
  **/
 
+var deepExtend = require('deep-extend');
+var isSubset = require('is-subset');
+
 module.exports = function(RED) {
     "use strict";
 
@@ -22,6 +25,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,n);
         this.name = n.name;
         this.onlyIfChanged = n.onlyIfChanged;
+        this.mode = n.mode;
         this.values = {};
 
         var node = this;
@@ -32,9 +36,15 @@ module.exports = function(RED) {
                     if (msg.payload != null && msg.payload != '') {
                         value = msg.payload;
                     }
-                    if (!node.onlyIfChanged || node.values[msg.topic] != value) {
+                    if (!node.onlyIfChanged
+                    || !isSubset([node.values[msg.topic]],[value])) {
                         if (value == undefined) {
                             delete node.values[msg.topic];
+                        } else if (node.mode === 'merge'
+                        && node.values.hasOwnProperty(msg.topic)) {
+                            var m = {"val": node.values[msg.topic]};
+                            deepExtend(m, {"val": value});
+                            node.values[msg.topic] = m.val;
                         } else {
                             node.values[msg.topic] = value;
                         }
