@@ -16,6 +16,18 @@
 -->
 
 <script type="text/x-red" data-template-name="collector">
+
+    <style>
+        .checkbox {
+            display: inline-block !important;
+            width: auto !important;
+            vertical-align: top !important;
+        }
+        .checkbox-label {
+            width: 70% !important;
+        }
+    </style>
+
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -25,6 +37,13 @@
         <input type="checkbox" id="node-input-onlyIfChanged" style="display: inline-block; width: auto; vertical-align: top;">
         <label for="node-input-onlyIfChanged" style="width: 70%;">Only return message if value changed ?</label>
     </div>
+    <div class="form-row" id="node-mode">
+        <label for="node-input-mode">Mode</label>
+        <select id="node-input-mode">
+            <option selected value="replace">Replace Values</option>
+            <option value="merge">Merge Values</option>
+        </select>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="collector">
@@ -33,6 +52,8 @@
     <p>If "<b>Only return message if value changed?</b>" is set, then a message will only be output, if the payload has changed since the last message with the same topic was received.</p>
 
     <p>If if a message is received with a <b>msg.topic</b> but no <b>msg.payload</b>, then that topic will be deleted from the collector.</p>
+
+    <p>If "<b>Mode</b>" is set to "<b>Replace Values</b>", then values contained in new messages replace previously stored values.  If however "<b>Mode</b>" is set to "<b>Merge Values</b>", then composite values (such as objects and arrays) contained in new messages are merged with existing composite values.  Refer to the <a href="https://www.npmjs.com/package/deep-extend">deep-extend</a> module for examples of how values are merged.</p>
 </script>
 
 <script type="text/javascript">
@@ -40,7 +61,8 @@
         category: 'function',
         defaults: {
             name: {value:""},
-            onlyIfChanged: {value:true}
+            onlyIfChanged: {value:true},
+            mode: {value:"replace"}
         },
         color:"rgb(243, 181, 103)",
         inputs:1,
